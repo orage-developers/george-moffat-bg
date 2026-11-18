@@ -17,6 +17,9 @@
 
 ## Content
 
+- For a shorter deck, keep the cover, the show and the closing slide. Drop
+  the slides whose numbers would stay placeholders first.
+
 - Show facts (format, cadence, segments) only from the guidelines.
 - Audience numbers, offers and prices only from the request; otherwise keep
   the placeholders.

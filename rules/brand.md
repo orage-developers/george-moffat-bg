@@ -65,8 +65,8 @@ only in the PDF, and never goes on slides (see
   right-aligned. `comparison-report.html` and `comparison-data.html` use the
   larger, left-aligned header with the tagline "The AI Rundown · Orage AI
   Agency" in grey.
-- Decks put "George W. Moffat" in the cover eyebrow and in every slide
-  footer.
+- Decks put "George W. Moffat" in the cover eyebrow and in the footer of
+  every content slide. Cover and closing slides have no footer.
 
 ## Voice
 

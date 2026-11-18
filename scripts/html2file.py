@@ -184,6 +184,8 @@ def soffice_convert(src: Path, out: Path, infilter: str, convert_to: str):
 GOOGLE_FONTS = {
     "Liberation Sans": "Bebas Neue", "Liberation Serif": "Bebas Neue",
     "Times New Roman": "Bebas Neue", "Arial": "Bebas Neue",
+    # LibreOffice list bullets; Bebas Neue has the bullet glyph.
+    "OpenSymbol": "Bebas Neue",
 }
 
 BODY_BGCOLOR_RE = re.compile(r'<body\b[^>]*\bbgcolor\s*=\s*["\']?#([0-9a-fA-F]{6})', re.I)
