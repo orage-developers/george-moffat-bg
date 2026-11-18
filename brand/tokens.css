@@ -1,0 +1,21 @@
+/* George W. Moffat tokens for files made with html-to-files (docs, PDFs, decks, sheets).
+   Monochrome: black backgrounds, white as the only accent, greys for hierarchy.
+   Never pure black (#000000): the darkest background is #010101.
+   Fonts and voice: ../BRAND-GUIDELINES.md. Never add a color. */
+:root {
+  --g-bg-primary: #010101;   /* page and slide background */
+  --g-bg-raised: #070707;    /* sections, raised panels */
+  --g-bg-card: #0C0C0C;      /* cards, boxes, table cells */
+  --g-bg-elevated: #151515;  /* table headers, covers */
+  --g-white: #FFFFFF;        /* the only accent: titles, key numbers, rules */
+  --g-ink: #C8C8C8;          /* body text */
+  --g-grey-mid: #8A8A8A;     /* secondary text, meta, earlier period in charts */
+  --g-grey-dim: #5A5A5A;     /* captions, labels at rest */
+  --g-grey-faint: #333333;   /* inactive bars, segment numbers */
+  --g-line: #262626;         /* card and table borders */
+  --g-hairline: #1C1C1C;     /* dividers */
+  --g-glow: 0 0 16px rgba(255, 255, 255, 0.18);  /* emphasis glow (PDF only) */
+
+  --font-display: 'Anton', Impact, sans-serif;
+  --font-text: 'Bebas Neue', Impact, 'Arial Narrow', sans-serif;
+}
