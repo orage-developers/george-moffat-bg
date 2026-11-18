@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TikTok Q1 vs Q2 report</title>
+<!-- Comparison report: period A vs period B with KPI tiles, bars, table, monthly trend, insights. DOCX and PDF. -->
+<style>
+  /* George W. Moffat brand: colors per rules/brand.md, fonts and voice per BRAND-GUIDELINES.md.
+     Hex colors only: the DOCX import does not read CSS variables. */
+  @font-face { font-family: "Anton"; src: url("brand://fonts/Anton-Regular.ttf"); }
+  @font-face { font-family: "Bebas Neue"; src: url("brand://fonts/BebasNeue-Regular.ttf"); }
+
+  /* Page: Chrome uses it for the PDF. The footer repeats on every PDF page. */
+  @page {
+    size: Letter; margin: 0.75in 0.75in 0.9in; background: #010101;
+    @bottom-center {
+      content: "GEORGE W. MOFFAT · THE AI RUNDOWN · ORAGE AI AGENCY";
+      font-family: "Bebas Neue", Impact, sans-serif; font-size: 9pt; letter-spacing: 2px; color: #8A8A8A;
+    }
+  }
+  html, body { background: #010101; }
+
+  /* Font on every selector: the LibreOffice DOCX import does not inherit from body.
+     Bebas Neue for everything; Anton only for h1, the wordmark and big numbers. */
+  body, p, li, td, th, span { font-family: "Bebas Neue", Impact, "Arial Narrow", sans-serif; font-weight: normal; color: #C8C8C8; text-transform: uppercase; letter-spacing: 0.5px; }
+  h1, .wordmark, .wordmark-sm, .price, .sig-name, .kpi-num { font-family: "Anton", Impact, sans-serif; font-weight: normal; text-transform: uppercase; }
+  h2, h3, .eyebrow { font-family: "Bebas Neue", Impact, "Arial Narrow", sans-serif; font-weight: normal; text-transform: uppercase; }
+  body { font-size: 12pt; line-height: 1.45; margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  h1 { font-size: 30pt; letter-spacing: 2px; line-height: 1.05; margin: 12pt 0 4pt; color: #FFFFFF; text-shadow: 0 0 18px rgba(255,255,255,0.18); }
+  h2 { font-size: 18pt; letter-spacing: 3px; margin: 18pt 0 6pt; padding-bottom: 3pt; border-bottom: 1px solid #333333; color: #FFFFFF; }
+  h3 { font-size: 14pt; letter-spacing: 2px; margin: 8pt 0 2pt; color: #FFFFFF; }
+  p  { margin: 0 0 7pt; }
+  a  { color: #FFFFFF; }
+  .eyebrow { font-size: 10pt; letter-spacing: 5px; color: #8A8A8A; margin: 12pt 0 0; }
+  .lead { font-size: 14pt; color: #FFFFFF; }
+  /* Emphasis: white and glow, never bold (both fonts have one weight). */
+  .key, strong { font-weight: normal; color: #FFFFFF; text-shadow: 0 0 10px rgba(255,255,255,0.35); }
+  .muted { color: #8A8A8A; font-size: 10pt; letter-spacing: 1px; }
+
+  /* Header: wordmark only, no background. A table: the DOCX import has no flex. */
+  .band { width: 100%; border-collapse: collapse; }
+  .band td { border: none; padding: 6pt 0; vertical-align: bottom; }
+  .wordmark { color: #FFFFFF; font-size: 20pt; letter-spacing: 3px; text-shadow: 0 0 16px rgba(255,255,255,0.2); }
+  .tagline { color: #8A8A8A; font-size: 10pt; letter-spacing: 4px; }
+  /* Compact header: small wordmark, right-aligned. */
+  .band-sm { width: 100%; border-collapse: collapse; }
+  .band-sm td { border: none; padding: 4pt 0; text-align: right; }
+  .wordmark-sm { color: #FFFFFF; font-size: 11pt; letter-spacing: 3px; }
+
+  .data { width: 100%; border-collapse: collapse; margin: 8pt 0 12pt; }
+  .data th { background: #151515; border: 1px solid #262626; padding: 5pt 7pt; text-align: left; }
+  .data td { background: #0C0C0C; border: 1px solid #262626; padding: 5pt 7pt; text-align: left; vertical-align: top; }
+  /* Header text: DOCX drops the th color but keeps a span color. */
+  .th { color: #FFFFFF; letter-spacing: 2px; }
+  .num { text-align: right; }
+
+  /* Segment card and price box: one-cell tables so DOCX keeps the fill.
+     White left bar = the lead item; the price box gets a full white border. */
+  .box { width: 100%; border-collapse: collapse; margin: 8pt 0; page-break-inside: avoid; }
+  .box td { background: #0C0C0C; border: 1px solid #262626; border-left: 3px solid #FFFFFF; padding: 10pt 12pt; vertical-align: top; }
+  .box.price-box td { border: 2px solid #FFFFFF; }
+  .price { font-size: 26pt; letter-spacing: 1px; color: #FFFFFF; margin: 0; text-shadow: 0 0 18px rgba(255,255,255,0.18); }
+  .cta { color: #FFFFFF; letter-spacing: 2px; }
+  /* Bebas Neue has no arrow glyph: it goes in Anton. */
+  .arrow { font-family: "Anton", Impact, sans-serif; color: #FFFFFF; }
+  .sig-name { font-size: 18pt; letter-spacing: 1px; color: #FFFFFF; margin: 0; }
+  .page-break { page-break-before: always; }
+  /* Keep headings with the content that follows them. */
+  h1, h2, h3, .eyebrow { page-break-after: avoid; break-after: avoid; }
+
+  /* Comparison bars: single-row tables with % widths. Earlier period grey, later period white. */
+  .barrow { border-collapse: collapse; margin: 0; }
+  .barrow td { border: none; padding: 2pt 4pt; font-size: 10pt; border-bottom: 2px solid #010101; }
+  .legend { font-size: 10pt; color: #8A8A8A; }
+  /* The square glyph is in Anton, not Bebas Neue. */
+  .sw-prev { font-family: "Anton", Impact, sans-serif; color: #8A8A8A; }
+  .sw-curr { font-family: "Anton", Impact, sans-serif; color: #FFFFFF; }
+  .kpi td { background: #0C0C0C; border: 1px solid #262626; border-left: 3px solid #FFFFFF; padding: 10pt 12pt; vertical-align: top; }
+  .kpi-num { font-size: 28pt; letter-spacing: 1px; color: #FFFFFF; margin: 0; line-height: 1; text-shadow: 0 0 16px rgba(255,255,255,0.2); }
+  .kpi-label { font-size: 10pt; letter-spacing: 1px; color: #8A8A8A; margin: 0; }
+  .up { color: #FFFFFF; }
+</style>
+</head>
+<body bgcolor="#010101" text="#C8C8C8">
+  <table class="band" width="100%" cellspacing="0" cellpadding="6">
+    <tr><td><span class="wordmark">GEORGE W. MOFFAT</span><br><span class="tagline">The AI Rundown · Orage AI Agency</span></td></tr>
+  </table>
+
+  <p class="eyebrow">Comparison report · TikTok · Q1 vs Q2 [YYYY]</p>
+  <h1>VIEWS UP +42.0% IN Q2</h1>
+  <p class="lead">[One line with the main result: what grew, by how much, and why it matters.]</p>
+  <p class="muted">Sample data. Replace every number with the real export. Prepared by George W. Moffat · [Date]</p>
+
+  <table class="kpi" width="100%" cellspacing="6" cellpadding="10">
+    <tr><td bgcolor="#0C0C0C" width="33%"><p class="kpi-label">Views</p><p class="kpi-num">+42.0%</p><p class="kpi-label">405,000 to 575,000</p></td><td bgcolor="#0C0C0C" width="33%"><p class="kpi-label">Likes</p><p class="kpi-num">+45.1%</p><p class="kpi-label">18,200 to 26,400</p></td><td bgcolor="#0C0C0C" width="33%"><p class="kpi-label">Followers gained</p><p class="kpi-num">+59.5%</p><p class="kpi-label">2,100 to 3,350</p></td></tr>
+  </table>
+
+  <h2>Q1 vs Q2 by metric</h2>
+  <p class="legend"><span class="sw-prev">■</span> Q1 &nbsp; <span class="sw-curr">■</span> Q2 &nbsp; Each metric uses its own scale.</p>
+  <table class="barrow" width="100%" cellspacing="0" cellpadding="3"><tr><td width="24%" bgcolor="#0C0C0C" style="background:#0C0C0C">Views</td><td width="8%" bgcolor="#0C0C0C" style="background:#0C0C0C">Q1</td><td width="16%" align="right" bgcolor="#0C0C0C" style="background:#0C0C0C">405,000&nbsp;&nbsp;</td><td width="37%" bgcolor="#8A8A8A" style="background:#8A8A8A">&nbsp;</td><td width="15%" bgcolor="#0C0C0C" style="background:#0C0C0C">&nbsp;</td></tr></table>
+  <table class="barrow" width="100%" cellspacing="0" cellpadding="3"><tr><td width="24%" bgcolor="#0C0C0C" style="background:#0C0C0C"></td><td width="8%" bgcolor="#0C0C0C" style="background:#0C0C0C">Q2</td><td width="16%" align="right" bgcolor="#0C0C0C" style="background:#0C0C0C">575,000&nbsp;&nbsp;</td><td width="52%" bgcolor="#FFFFFF" style="background:#FFFFFF">&nbsp;</td></tr></table>
+  <table class="barrow" width="100%" cellspacing="0" cellpadding="3"><tr><td width="24%" bgcolor="#0C0C0C" style="background:#0C0C0C">Likes</td><td width="8%" bgcolor="#0C0C0C" style="background:#0C0C0C">Q1</td><td width="16%" align="right" bgcolor="#0C0C0C" style="background:#0C0C0C">18,200&nbsp;&nbsp;</td><td width="36%" bgcolor="#8A8A8A" style="background:#8A8A8A">&nbsp;</td><td width="16%" bgcolor="#0C0C0C" style="background:#0C0C0C">&nbsp;</td></tr></table>
+  <table class="barrow" width="100%" cellspacing="0" cellpadding="3"><tr><td width="24%" bgcolor="#0C0C0C" style="background:#0C0C0C"></td><td width="8%" bgcolor="#0C0C0C" style="background:#0C0C0C">Q2</td><td width="16%" align="right" bgcolor="#0C0C0C" style="background:#0C0C0C">26,400&nbsp;&nbsp;</td><td width="52%" bgcolor="#FFFFFF" style="background:#FFFFFF">&nbsp;</td></tr></table>
+  <table class="barrow" width="100%" cellspacing="0" cellpadding="3"><tr><td width="24%" bgcolor="#0C0C0C" style="background:#0C0C0C">Followers gained</td><td width="8%" bgcolor="#0C0C0C" style="background:#0C0C0C">Q1</td><td width="16%" align="right" bgcolor="#0C0C0C" style="background:#0C0C0C">2,100&nbsp;&nbsp;</td><td width="33%" bgcolor="#8A8A8A" style="background:#8A8A8A">&nbsp;</td><td width="19%" bgcolor="#0C0C0C" style="background:#0C0C0C">&nbsp;</td></tr></table>
+  <table class="barrow" width="100%" cellspacing="0" cellpadding="3"><tr><td width="24%" bgcolor="#0C0C0C" style="background:#0C0C0C"></td><td width="8%" bgcolor="#0C0C0C" style="background:#0C0C0C">Q2</td><td width="16%" align="right" bgcolor="#0C0C0C" style="background:#0C0C0C">3,350&nbsp;&nbsp;</td><td width="52%" bgcolor="#FFFFFF" style="background:#FFFFFF">&nbsp;</td></tr></table>
+  <table class="barrow" width="100%" cellspacing="0" cellpadding="3"><tr><td width="24%" bgcolor="#0C0C0C" style="background:#0C0C0C">Avg. watch time (s)</td><td width="8%" bgcolor="#0C0C0C" style="background:#0C0C0C">Q1</td><td width="16%" align="right" bgcolor="#0C0C0C" style="background:#0C0C0C">9.4&nbsp;&nbsp;</td><td width="44%" bgcolor="#8A8A8A" style="background:#8A8A8A">&nbsp;</td><td width="8%" bgcolor="#0C0C0C" style="background:#0C0C0C">&nbsp;</td></tr></table>
+  <table class="barrow" width="100%" cellspacing="0" cellpadding="3"><tr><td width="24%" bgcolor="#0C0C0C" style="background:#0C0C0C"></td><td width="8%" bgcolor="#0C0C0C" style="background:#0C0C0C">Q2</td><td width="16%" align="right" bgcolor="#0C0C0C" style="background:#0C0C0C">11.2&nbsp;&nbsp;</td><td width="52%" bgcolor="#FFFFFF" style="background:#FFFFFF">&nbsp;</td></tr></table>
+  <table class="barrow" width="100%" cellspacing="0" cellpadding="3"><tr><td width="24%" bgcolor="#0C0C0C" style="background:#0C0C0C">Posts</td><td width="8%" bgcolor="#0C0C0C" style="background:#0C0C0C">Q1</td><td width="16%" align="right" bgcolor="#0C0C0C" style="background:#0C0C0C">36&nbsp;&nbsp;</td><td width="47%" bgcolor="#8A8A8A" style="background:#8A8A8A">&nbsp;</td><td width="5%" bgcolor="#0C0C0C" style="background:#0C0C0C">&nbsp;</td></tr></table>
+  <table class="barrow" width="100%" cellspacing="0" cellpadding="3"><tr><td width="24%" bgcolor="#0C0C0C" style="background:#0C0C0C"></td><td width="8%" bgcolor="#0C0C0C" style="background:#0C0C0C">Q2</td><td width="16%" align="right" bgcolor="#0C0C0C" style="background:#0C0C0C">40&nbsp;&nbsp;</td><td width="52%" bgcolor="#FFFFFF" style="background:#FFFFFF">&nbsp;</td></tr></table>
+
+  <table class="data" border="1" cellspacing="0" cellpadding="6" width="100%">
+    <thead><tr><th bgcolor="#151515" align="left"><span class="th">Metric</span></th><th bgcolor="#151515" align="right" class="num"><span class="th">Q1</span></th><th bgcolor="#151515" align="right" class="num"><span class="th">Q2</span></th><th bgcolor="#151515" align="right" class="num"><span class="th">Change</span></th><th bgcolor="#151515" align="right" class="num"><span class="th">% change</span></th></tr></thead>
+    <tbody>
+      <tr><td bgcolor="#0C0C0C">Views</td><td bgcolor="#0C0C0C" align="right" class="num">405,000</td><td bgcolor="#0C0C0C" align="right" class="num">575,000</td><td bgcolor="#0C0C0C" align="right" class="num">+170,000</td><td bgcolor="#0C0C0C" align="right" class="num"><span class="up">+42.0%</span></td></tr>
+      <tr><td bgcolor="#0C0C0C">Likes</td><td bgcolor="#0C0C0C" align="right" class="num">18,200</td><td bgcolor="#0C0C0C" align="right" class="num">26,400</td><td bgcolor="#0C0C0C" align="right" class="num">+8,200</td><td bgcolor="#0C0C0C" align="right" class="num"><span class="up">+45.1%</span></td></tr>
+      <tr><td bgcolor="#0C0C0C">Followers gained</td><td bgcolor="#0C0C0C" align="right" class="num">2,100</td><td bgcolor="#0C0C0C" align="right" class="num">3,350</td><td bgcolor="#0C0C0C" align="right" class="num">+1,250</td><td bgcolor="#0C0C0C" align="right" class="num"><span class="up">+59.5%</span></td></tr>
+      <tr><td bgcolor="#0C0C0C">Avg. watch time (s)</td><td bgcolor="#0C0C0C" align="right" class="num">9.4</td><td bgcolor="#0C0C0C" align="right" class="num">11.2</td><td bgcolor="#0C0C0C" align="right" class="num">+1.8</td><td bgcolor="#0C0C0C" align="right" class="num"><span class="up">+19.1%</span></td></tr>
+      <tr><td bgcolor="#0C0C0C">Posts</td><td bgcolor="#0C0C0C" align="right" class="num">36</td><td bgcolor="#0C0C0C" align="right" class="num">40</td><td bgcolor="#0C0C0C" align="right" class="num">+4</td><td bgcolor="#0C0C0C" align="right" class="num"><span class="up">+11.1%</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Views by month</h2>
+  <p class="legend"><span class="sw-prev">■</span> Q1 &nbsp; <span class="sw-curr">■</span> Q2</p>
+  <table class="barrow" width="100%" cellspacing="0" cellpadding="3"><tr><td width="24%" bgcolor="#0C0C0C" style="background:#0C0C0C">Jan</td><td width="8%" bgcolor="#0C0C0C" style="background:#0C0C0C">Q1</td><td width="16%" align="right" bgcolor="#0C0C0C" style="background:#0C0C0C">120,000&nbsp;&nbsp;</td><td width="29%" bgcolor="#8A8A8A" style="background:#8A8A8A">&nbsp;</td><td width="23%" bgcolor="#0C0C0C" style="background:#0C0C0C">&nbsp;</td></tr></table>
+  <table class="barrow" width="100%" cellspacing="0" cellpadding="3"><tr><td width="24%" bgcolor="#0C0C0C" style="background:#0C0C0C">Feb</td><td width="8%" bgcolor="#0C0C0C" style="background:#0C0C0C">Q1</td><td width="16%" align="right" bgcolor="#0C0C0C" style="background:#0C0C0C">135,000&nbsp;&nbsp;</td><td width="33%" bgcolor="#8A8A8A" style="background:#8A8A8A">&nbsp;</td><td width="19%" bgcolor="#0C0C0C" style="background:#0C0C0C">&nbsp;</td></tr></table>
+  <table class="barrow" width="100%" cellspacing="0" cellpadding="3"><tr><td width="24%" bgcolor="#0C0C0C" style="background:#0C0C0C">Mar</td><td width="8%" bgcolor="#0C0C0C" style="background:#0C0C0C">Q1</td><td width="16%" align="right" bgcolor="#0C0C0C" style="background:#0C0C0C">150,000&nbsp;&nbsp;</td><td width="36%" bgcolor="#8A8A8A" style="background:#8A8A8A">&nbsp;</td><td width="16%" bgcolor="#0C0C0C" style="background:#0C0C0C">&nbsp;</td></tr></table>
+  <table class="barrow" width="100%" cellspacing="0" cellpadding="3"><tr><td width="24%" bgcolor="#0C0C0C" style="background:#0C0C0C">Apr</td><td width="8%" bgcolor="#0C0C0C" style="background:#0C0C0C">Q2</td><td width="16%" align="right" bgcolor="#0C0C0C" style="background:#0C0C0C">170,000&nbsp;&nbsp;</td><td width="41%" bgcolor="#FFFFFF" style="background:#FFFFFF">&nbsp;</td><td width="11%" bgcolor="#0C0C0C" style="background:#0C0C0C">&nbsp;</td></tr></table>
+  <table class="barrow" width="100%" cellspacing="0" cellpadding="3"><tr><td width="24%" bgcolor="#0C0C0C" style="background:#0C0C0C">May</td><td width="8%" bgcolor="#0C0C0C" style="background:#0C0C0C">Q2</td><td width="16%" align="right" bgcolor="#0C0C0C" style="background:#0C0C0C">190,000&nbsp;&nbsp;</td><td width="46%" bgcolor="#FFFFFF" style="background:#FFFFFF">&nbsp;</td><td width="6%" bgcolor="#0C0C0C" style="background:#0C0C0C">&nbsp;</td></tr></table>
+  <table class="barrow" width="100%" cellspacing="0" cellpadding="3"><tr><td width="24%" bgcolor="#0C0C0C" style="background:#0C0C0C">Jun</td><td width="8%" bgcolor="#0C0C0C" style="background:#0C0C0C">Q2</td><td width="16%" align="right" bgcolor="#0C0C0C" style="background:#0C0C0C">215,000&nbsp;&nbsp;</td><td width="52%" bgcolor="#FFFFFF" style="background:#FFFFFF">&nbsp;</td></tr></table>
+
+  <h2>What changed</h2>
+  <ol>
+    <li><strong>[Driver]</strong> — [evidence from the data].</li>
+    <li><strong>[Driver]</strong> — [evidence from the data].</li>
+    <li><strong>[Driver]</strong> — [evidence from the data].</li>
+  </ol>
+
+  <h2>Next quarter</h2>
+  <table class="data" border="1" cellspacing="0" cellpadding="6" width="100%">
+    <thead><tr><th bgcolor="#151515" align="left"><span class="th">Action</span></th><th bgcolor="#151515" align="left"><span class="th">Target</span></th><th bgcolor="#151515" align="left"><span class="th">Owner</span></th></tr></thead>
+    <tbody>
+      <tr><td bgcolor="#0C0C0C">[Action]</td><td bgcolor="#0C0C0C">[Metric and number]</td><td bgcolor="#0C0C0C">[Owner]</td></tr>
+      <tr><td bgcolor="#0C0C0C">[Action]</td><td bgcolor="#0C0C0C">[Metric and number]</td><td bgcolor="#0C0C0C">[Owner]</td></tr>
+    </tbody>
+  </table>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Document title</title>
+<!-- Blank document starter. Use for any DOCX or PDF without a closer template. -->
+<style>
+  /* George W. Moffat brand: colors per rules/brand.md, fonts and voice per BRAND-GUIDELINES.md.
+     Hex colors only: the DOCX import does not read CSS variables. */
+  @font-face { font-family: "Anton"; src: url("brand://fonts/Anton-Regular.ttf"); }
+  @font-face { font-family: "Bebas Neue"; src: url("brand://fonts/BebasNeue-Regular.ttf"); }
+
+  /* Page: Chrome uses it for the PDF. The footer repeats on every PDF page. */
+  @page {
+    size: Letter; margin: 0.75in 0.75in 0.9in; background: #010101;
+    @bottom-center {
+      content: "GEORGE W. MOFFAT · THE AI RUNDOWN · ORAGE AI AGENCY";
+      font-family: "Bebas Neue", Impact, sans-serif; font-size: 9pt; letter-spacing: 2px; color: #8A8A8A;
+    }
+  }
+  html, body { background: #010101; }
+
+  /* Font on every selector: the LibreOffice DOCX import does not inherit from body.
+     Bebas Neue for everything; Anton only for h1, the wordmark and big numbers. */
+  body, p, li, td, th, span { font-family: "Bebas Neue", Impact, "Arial Narrow", sans-serif; font-weight: normal; color: #C8C8C8; text-transform: uppercase; letter-spacing: 0.5px; }
+  h1, .wordmark, .wordmark-sm, .price, .sig-name, .kpi-num { font-family: "Anton", Impact, sans-serif; font-weight: normal; text-transform: uppercase; }
+  h2, h3, .eyebrow { font-family: "Bebas Neue", Impact, "Arial Narrow", sans-serif; font-weight: normal; text-transform: uppercase; }
+  body { font-size: 12pt; line-height: 1.45; margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  h1 { font-size: 30pt; letter-spacing: 2px; line-height: 1.05; margin: 12pt 0 4pt; color: #FFFFFF; text-shadow: 0 0 18px rgba(255,255,255,0.18); }
+  h2 { font-size: 18pt; letter-spacing: 3px; margin: 18pt 0 6pt; padding-bottom: 3pt; border-bottom: 1px solid #333333; color: #FFFFFF; }
+  h3 { font-size: 14pt; letter-spacing: 2px; margin: 8pt 0 2pt; color: #FFFFFF; }
+  p  { margin: 0 0 7pt; }
+  a  { color: #FFFFFF; }
+  .eyebrow { font-size: 10pt; letter-spacing: 5px; color: #8A8A8A; margin: 12pt 0 0; }
+  .lead { font-size: 14pt; color: #FFFFFF; }
+  /* Emphasis: white and glow, never bold (both fonts have one weight). */
+  .key, strong { font-weight: normal; color: #FFFFFF; text-shadow: 0 0 10px rgba(255,255,255,0.35); }
+  .muted { color: #8A8A8A; font-size: 10pt; letter-spacing: 1px; }
+
+  /* Header: wordmark only, no background. A table: the DOCX import has no flex. */
+  .band { width: 100%; border-collapse: collapse; }
+  .band td { border: none; padding: 6pt 0; vertical-align: bottom; }
+  .wordmark { color: #FFFFFF; font-size: 20pt; letter-spacing: 3px; text-shadow: 0 0 16px rgba(255,255,255,0.2); }
+  .tagline { color: #8A8A8A; font-size: 10pt; letter-spacing: 4px; }
+  /* Compact header: small wordmark, right-aligned. */
+  .band-sm { width: 100%; border-collapse: collapse; }
+  .band-sm td { border: none; padding: 4pt 0; text-align: right; }
+  .wordmark-sm { color: #FFFFFF; font-size: 11pt; letter-spacing: 3px; }
+
+  .data { width: 100%; border-collapse: collapse; margin: 8pt 0 12pt; }
+  .data th { background: #151515; border: 1px solid #262626; padding: 5pt 7pt; text-align: left; }
+  .data td { background: #0C0C0C; border: 1px solid #262626; padding: 5pt 7pt; text-align: left; vertical-align: top; }
+  /* Header text: DOCX drops the th color but keeps a span color. */
+  .th { color: #FFFFFF; letter-spacing: 2px; }
+  .num { text-align: right; }
+
+  /* Segment card and price box: one-cell tables so DOCX keeps the fill.
+     White left bar = the lead item; the price box gets a full white border. */
+  .box { width: 100%; border-collapse: collapse; margin: 8pt 0; page-break-inside: avoid; }
+  .box td { background: #0C0C0C; border: 1px solid #262626; border-left: 3px solid #FFFFFF; padding: 10pt 12pt; vertical-align: top; }
+  .box.price-box td { border: 2px solid #FFFFFF; }
+  .price { font-size: 26pt; letter-spacing: 1px; color: #FFFFFF; margin: 0; text-shadow: 0 0 18px rgba(255,255,255,0.18); }
+  .cta { color: #FFFFFF; letter-spacing: 2px; }
+  /* Bebas Neue has no arrow glyph: it goes in Anton. */
+  .arrow { font-family: "Anton", Impact, sans-serif; color: #FFFFFF; }
+  .sig-name { font-size: 18pt; letter-spacing: 1px; color: #FFFFFF; margin: 0; }
+  .page-break { page-break-before: always; }
+  /* Keep headings with the content that follows them. */
+  h1, h2, h3, .eyebrow { page-break-after: avoid; break-after: avoid; }
+</style>
+</head>
+<body bgcolor="#010101" text="#C8C8C8">
+  <table class="band-sm" width="100%" cellspacing="0" cellpadding="4">
+    <tr><td align="right"><span class="wordmark-sm">GEORGE W. MOFFAT</span></td></tr>
+  </table>
+
+  <p class="eyebrow">01 — Document type</p>
+  <h1>DOCUMENT TITLE</h1>
+  <p class="lead">One opening line that states the result, not the feature.</p>
+
+  <h2>Summary</h2>
+  <p>Short lines. Lead with the result. Show <span class="key">the number that matters</span> in white.</p>
+  <ul>
+    <li>List item</li>
+    <li>Another item</li>
+  </ul>
+
+  <h2>Table</h2>
+  <table class="data" border="1" cellspacing="0" cellpadding="6" width="100%">
+    <thead><tr><th bgcolor="#151515" align="left"><span class="th">Item</span></th><th bgcolor="#151515" align="right" class="num"><span class="th">Amount</span></th></tr></thead>
+    <tbody>
+      <tr><td bgcolor="#0C0C0C">Example A</td><td bgcolor="#0C0C0C" align="right" class="num">10</td></tr>
+      <tr><td bgcolor="#0C0C0C">Example B</td><td bgcolor="#0C0C0C" align="right" class="num">20</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="page-break">New page</h2>
+  <p>Content after a page break.</p>
+</body>
+</html>

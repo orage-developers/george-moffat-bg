@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The AI Rundown pitch deck</title>
+<!-- Show pitch deck (partners, guests, sponsors): host, four segments, audience, offer, CTA. PPTX and PDF. -->
+<style>
+  /* George W. Moffat brand: colors per rules/brand.md, fonts and voice per BRAND-GUIDELINES.md. */
+  @font-face { font-family: "Anton"; src: url("brand://fonts/Anton-Regular.ttf"); }
+  @font-face { font-family: "Bebas Neue"; src: url("brand://fonts/BebasNeue-Regular.ttf"); }
+  :root {
+    --g-bg: #010101; --g-raised: #070707; --g-card: #0C0C0C; --g-elevated: #151515;
+    --g-white: #FFFFFF; --g-ink: #C8C8C8; --g-mid: #8A8A8A; --g-dim: #5A5A5A;
+    --g-faint: #333333; --g-line: #262626;
+    --font-display: 'Anton', Impact, sans-serif;
+    --font-text: 'Bebas Neue', Impact, 'Arial Narrow', sans-serif;
+  }
+
+  /* No glow (text-shadow, box-shadow) and no rounded corners on slides: the PPTX
+     import turns them into images and filled shapes. Emphasis comes from scale. */
+  /* 16:9. Each <section class="slide"> is one page = one slide. Do not change. */
+  @page { size: 13.333in 7.5in; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--g-bg); }
+  body { font-family: var(--font-text); color: var(--g-ink); text-transform: uppercase; letter-spacing: 1px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .slide {
+    position: relative; width: 13.333in; height: 7.5in; padding: 0.8in 0.9in 0.9in;
+    overflow: hidden; page-break-after: always; break-after: page;
+    display: flex; flex-direction: column; background: var(--g-bg);
+  }
+  .slide:last-child { page-break-after: auto; break-after: auto; }
+  .slide h1, .slide h2, .big, .price { font-family: var(--font-display); font-weight: normal; margin: 0; color: var(--g-white); }
+  .slide h1 { font-size: 96pt; letter-spacing: 2px; line-height: 0.92; }
+  .slide h2 { font-size: 54pt; letter-spacing: 1px; line-height: 1; }
+  .slide h3 { font-family: var(--font-text); font-weight: normal; font-size: 30pt; letter-spacing: 2px; line-height: 1.05; color: var(--g-white); margin: 0 0 0.1in; }
+  .eyebrow { font-size: 16pt; letter-spacing: 6px; color: var(--g-mid); margin: 0 0 0.15in; }
+  .rule { width: 1.1in; height: 2px; background: var(--g-white); margin: 0.25in 0 0.35in; }
+  .slide p, .slide li { font-size: 24pt; line-height: 1.45; margin: 0; }
+  .lead { color: var(--g-white); }
+  strong { font-weight: normal; color: var(--g-white); }
+  .slide ul { margin: 0; padding-left: 0.35in; }
+  .slide li { margin-bottom: 0.1in; }
+  .slide li::marker { color: var(--g-white); }
+  .foot {
+    position: absolute; left: 0.9in; right: 0.9in; bottom: 0.4in;
+    display: flex; justify-content: space-between;
+    font-size: 13pt; letter-spacing: 4px; color: var(--g-dim);
+  }
+
+  .cover { background: var(--g-raised); justify-content: center; }
+  .thin { color: var(--g-faint) !important; }
+  .card { background: var(--g-card); border: 1px solid var(--g-line); border-left: 3px solid var(--g-white); padding: 0.35in 0.4in; }
+  .card.std { border-left-color: var(--g-faint); }
+  .card p { font-size: 19pt; line-height: 1.35; }
+  .card .no { font-size: 14pt; letter-spacing: 3px; color: var(--g-dim); }
+  .big { font-size: 150pt; letter-spacing: 1px; line-height: 0.9; }
+  .price { font-size: 44pt; letter-spacing: 1px; line-height: 1; margin: 0.1in 0; }
+  .small { font-size: 15pt !important; color: var(--g-mid); }
+  /* Bebas Neue has no arrow glyph: it goes in Anton. */
+  .arrow { font-family: var(--font-display); }
+  .cols { display: flex; gap: 0.6in; align-items: center; }
+  .cols > div { flex: 1; }
+  .grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.3in; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.35in; align-items: stretch; }
+</style>
+</head>
+<body>
+  <section class="slide cover">
+    <p class="eyebrow">George W. Moffat · [Partner]</p>
+    <h1>THE AI<br><span class="thin">RUNDOWN</span></h1>
+    <div class="rule"></div>
+    <p class="lead">What actually happened in AI this week. Tuesdays · YouTube Live.</p>
+  </section>
+
+  <section class="slide">
+    <p class="eyebrow">01 — The host</p>
+    <h2>GEORGE W. MOFFAT</h2>
+    <div class="rule"></div>
+    <ul>
+      <li>The operator who tells you what happened in AI and why it changes how you work</li>
+      <li>Founder, Orage AI Agency</li>
+      <li>Direct, results-first, no hype</li>
+    </ul>
+    <div class="foot"><span>George W. Moffat · The AI Rundown</span><span>02</span></div>
+  </section>
+
+  <section class="slide">
+    <p class="eyebrow">02 — The show</p>
+    <h2>FOUR SEGMENTS. EVERY WEEK.</h2>
+    <div class="rule"></div>
+    <div class="grid2">
+      <div class="card"><p class="no">01</p><h3>Headlines</h3><p>The biggest verified AI news of the week.</p></div>
+      <div class="card std"><p class="no">02</p><h3>Viral &amp; spicy</h3><p>Contested posts and hot takes. Take a side.</p></div>
+      <div class="card std"><p class="no">03</p><h3>Reddit rabbit holes</h3><p>Title, top comment, verdict.</p></div>
+      <div class="card std"><p class="no">04</p><h3>The big fight</h3><p>Jobs and the economy. Debate-style close.</p></div>
+    </div>
+    <div class="foot"><span>George W. Moffat · The AI Rundown</span><span>03</span></div>
+  </section>
+
+  <section class="slide">
+    <p class="eyebrow">03 — The audience</p>
+    <h2>[THE NUMBER THAT MATTERS]</h2>
+    <div class="rule"></div>
+    <div class="grid3">
+      <div class="card std"><p class="price">[0,000]</p><p class="small">[Live viewers per show]</p></div>
+      <div class="card"><p class="price">[0,000]</p><p class="small">[Subscribers]</p></div>
+      <div class="card std"><p class="price">[0,000]</p><p class="small">[Views per month]</p></div>
+    </div>
+    <div class="foot"><span>George W. Moffat · The AI Rundown</span><span>04</span></div>
+  </section>
+
+  <section class="slide">
+    <p class="eyebrow">04 — The offer</p>
+    <h2>[WHAT YOU GET]</h2>
+    <div class="rule"></div>
+    <div class="cols">
+      <div><p>[Placement, segment or collaboration, stated as a result.]</p></div>
+      <div class="card"><p class="price">[$0,000]</p><p class="small">[Terms]</p></div>
+    </div>
+    <div class="foot"><span>George W. Moffat · The AI Rundown</span><span>05</span></div>
+  </section>
+
+  <section class="slide cover">
+    <h2>[ONE CLEAR ASK] <span class="arrow">→</span></h2>
+    <div class="rule"></div>
+    <p class="lead">[Booking link] · orage.agency</p>
+  </section>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Contact list</title>
+<!-- Contact list (guests, sponsors, leads): one table, built for CSV; XLSX and PDF also work. -->
+<style>
+  /* Styling only affects the PDF of this HTML. XLSX and CSV read the tables.
+     George W. Moffat brand: colors per rules/brand.md, fonts and voice per BRAND-GUIDELINES.md. */
+  @font-face { font-family: "Anton"; src: url("brand://fonts/Anton-Regular.ttf"); }
+  @font-face { font-family: "Bebas Neue"; src: url("brand://fonts/BebasNeue-Regular.ttf"); }
+  @page {
+    size: Letter landscape; margin: 0.6in 0.6in 0.8in; background: #010101;
+    @bottom-center { content: "GEORGE W. MOFFAT · THE AI RUNDOWN · ORAGE AI AGENCY"; font-family: "Bebas Neue", Impact, sans-serif; font-size: 9pt; letter-spacing: 2px; color: #8A8A8A; }
+  }
+  html, body { background: #010101; }
+  body { font-family: "Bebas Neue", Impact, "Arial Narrow", sans-serif; font-size: 11pt; letter-spacing: 0.5px; text-transform: uppercase; color: #C8C8C8; margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  header { display: flex; align-items: baseline; gap: 12pt; padding: 6pt 0; }
+  header .wm { font-family: "Anton", Impact, sans-serif; font-size: 20pt; letter-spacing: 3px; color: #FFFFFF; text-shadow: 0 0 16px rgba(255,255,255,0.2); }
+  header .tl { font-size: 10pt; letter-spacing: 4px; color: #8A8A8A; }
+  /* Compact header: small wordmark, right-aligned. */
+  header.compact { justify-content: flex-end; padding: 4pt 0; }
+  header.compact .wm { font-size: 11pt; text-shadow: none; }
+  header.compact .tl { display: none; }
+  /* % change tiles (PDF only). */
+  .tiles { display: flex; gap: 8pt; margin: 14pt 0 0; }
+  .tile { flex: 1; background: #0C0C0C; border: 1px solid #262626; border-left: 3px solid #FFFFFF; border-radius: 4px; padding: 8pt 10pt; }
+  .tile .label { font-size: 9.5pt; letter-spacing: 2px; color: #8A8A8A; margin: 0; }
+  .tile .pct { font-family: "Anton", Impact, sans-serif; font-size: 24pt; letter-spacing: 1px; color: #FFFFFF; margin: 3pt 0; line-height: 1; text-shadow: 0 0 14px rgba(255,255,255,0.2); }
+  .tile .from { font-size: 9.5pt; color: #8A8A8A; margin: 0; }
+  td.pct { color: #FFFFFF; }
+  table { width: 100%; border-collapse: collapse; margin: 14pt 0; }
+  caption { font-size: 16pt; letter-spacing: 3px; color: #FFFFFF; text-align: left; padding-bottom: 3pt; border-bottom: 1px solid #333333; margin-bottom: 6pt; }
+  th { background: #151515; color: #FFFFFF; font-weight: normal; letter-spacing: 2px; text-align: left; padding: 5pt 7pt; }
+  td { background: #0C0C0C; border-bottom: 1px solid #262626; padding: 5pt 7pt; }
+  tr.total td { color: #FFFFFF; border-top: 1px solid #FFFFFF; }
+  .key { color: #FFFFFF; text-shadow: 0 0 10px rgba(255,255,255,0.35); }
+  .note { font-size: 9.5pt; color: #8A8A8A; margin: 4pt 0 0; }
+</style>
+</head>
+<body>
+  <header><span class="wm">GEORGE W. MOFFAT</span><span class="tl">The AI Rundown · Orage AI Agency</span></header>
+
+  <!-- Each top-level <table> = one XLSX sheet / one CSV file. <caption> titles it in the PDF. -->
+  <table data-sheet="Contacts">
+    <caption>Contacts · [List name]</caption>
+    <tr><th>Name</th><th>Company</th><th>Email</th><th>Phone</th><th>Type</th><th>Source</th><th>Stage</th></tr>
+    <tr><td>[Name]</td><td>[Company]</td><td>[email]</td><td data-type="text">[+1 405 000 0000]</td><td>Guest</td><td>[Referral]</td><td>New</td></tr>
+    <tr><td>[Name]</td><td>[Company]</td><td>[email]</td><td data-type="text">[+1 405 000 0000]</td><td>Sponsor</td><td>[Website]</td><td>Qualified</td></tr>
+  </table>
+  <p class="note">One table, one CSV. Phones, ZIP codes and IDs use data-type="text" to keep leading zeros. Mark sample data as sample.</p>
+</body>
+</html>

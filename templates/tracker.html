@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Episode tracker</title>
+<!-- Episode or project tracker: tasks with status, done flag formula and a summary sheet. XLSX and PDF. -->
+<style>
+  /* Styling only affects the PDF of this HTML. XLSX and CSV read the tables.
+     George W. Moffat brand: colors per rules/brand.md, fonts and voice per BRAND-GUIDELINES.md. */
+  @font-face { font-family: "Anton"; src: url("brand://fonts/Anton-Regular.ttf"); }
+  @font-face { font-family: "Bebas Neue"; src: url("brand://fonts/BebasNeue-Regular.ttf"); }
+  @page {
+    size: Letter landscape; margin: 0.6in 0.6in 0.8in; background: #010101;
+    @bottom-center { content: "GEORGE W. MOFFAT · THE AI RUNDOWN · ORAGE AI AGENCY"; font-family: "Bebas Neue", Impact, sans-serif; font-size: 9pt; letter-spacing: 2px; color: #8A8A8A; }
+  }
+  html, body { background: #010101; }
+  body { font-family: "Bebas Neue", Impact, "Arial Narrow", sans-serif; font-size: 11pt; letter-spacing: 0.5px; text-transform: uppercase; color: #C8C8C8; margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  header { display: flex; align-items: baseline; gap: 12pt; padding: 6pt 0; }
+  header .wm { font-family: "Anton", Impact, sans-serif; font-size: 20pt; letter-spacing: 3px; color: #FFFFFF; text-shadow: 0 0 16px rgba(255,255,255,0.2); }
+  header .tl { font-size: 10pt; letter-spacing: 4px; color: #8A8A8A; }
+  /* Compact header: small wordmark, right-aligned. */
+  header.compact { justify-content: flex-end; padding: 4pt 0; }
+  header.compact .wm { font-size: 11pt; text-shadow: none; }
+  header.compact .tl { display: none; }
+  /* % change tiles (PDF only). */
+  .tiles { display: flex; gap: 8pt; margin: 14pt 0 0; }
+  .tile { flex: 1; background: #0C0C0C; border: 1px solid #262626; border-left: 3px solid #FFFFFF; border-radius: 4px; padding: 8pt 10pt; }
+  .tile .label { font-size: 9.5pt; letter-spacing: 2px; color: #8A8A8A; margin: 0; }
+  .tile .pct { font-family: "Anton", Impact, sans-serif; font-size: 24pt; letter-spacing: 1px; color: #FFFFFF; margin: 3pt 0; line-height: 1; text-shadow: 0 0 14px rgba(255,255,255,0.2); }
+  .tile .from { font-size: 9.5pt; color: #8A8A8A; margin: 0; }
+  td.pct { color: #FFFFFF; }
+  table { width: 100%; border-collapse: collapse; margin: 14pt 0; }
+  caption { font-size: 16pt; letter-spacing: 3px; color: #FFFFFF; text-align: left; padding-bottom: 3pt; border-bottom: 1px solid #333333; margin-bottom: 6pt; }
+  th { background: #151515; color: #FFFFFF; font-weight: normal; letter-spacing: 2px; text-align: left; padding: 5pt 7pt; }
+  td { background: #0C0C0C; border-bottom: 1px solid #262626; padding: 5pt 7pt; }
+  tr.total td { color: #FFFFFF; border-top: 1px solid #FFFFFF; }
+  .key { color: #FFFFFF; text-shadow: 0 0 10px rgba(255,255,255,0.35); }
+  .note { font-size: 9.5pt; color: #8A8A8A; margin: 4pt 0 0; }
+</style>
+</head>
+<body>
+  <header><span class="wm">GEORGE W. MOFFAT</span><span class="tl">The AI Rundown · Orage AI Agency</span></header>
+
+  <!-- Each top-level <table> = one XLSX sheet / one CSV file. <caption> titles it in the PDF. -->
+  <table data-sheet="Tracker">
+    <caption>Episode tracker · The AI Rundown · [Episode]</caption>
+    <tr><th>Week</th><th>Task</th><th>Owner</th><th>Status</th><th>Due</th><th>Done</th></tr>
+    <tr><td>1</td><td>Pick the lead story</td><td>[Owner]</td><td>Done</td><td data-type="text">[YYYY-MM-DD]</td><td data-formula="=IF(D2=&quot;Done&quot;,1,0)">1</td></tr>
+    <tr><td>1</td><td>Verify the headlines</td><td>[Owner]</td><td>Done</td><td data-type="text">[YYYY-MM-DD]</td><td data-formula="=IF(D3=&quot;Done&quot;,1,0)">1</td></tr>
+    <tr><td>1</td><td>Build the segment cards</td><td>[Owner]</td><td>In progress</td><td data-type="text">[YYYY-MM-DD]</td><td data-formula="=IF(D4=&quot;Done&quot;,1,0)">0</td></tr>
+    <tr><td>1</td><td>Go live</td><td>[Owner]</td><td>Not started</td><td data-type="text">[YYYY-MM-DD]</td><td data-formula="=IF(D5=&quot;Done&quot;,1,0)">0</td></tr>
+    <tr><td>2</td><td>Cut short-form clips</td><td>[Owner]</td><td>Not started</td><td data-type="text">[YYYY-MM-DD]</td><td data-formula="=IF(D6=&quot;Done&quot;,1,0)">0</td></tr>
+    <tr><td>2</td><td>Post the end card</td><td>[Owner]</td><td>Not started</td><td data-type="text">[YYYY-MM-DD]</td><td data-formula="=IF(D7=&quot;Done&quot;,1,0)">0</td></tr>
+  </table>
+
+  <table data-sheet="Summary">
+    <caption>Summary</caption>
+    <tr><th>Measure</th><th>Value</th></tr>
+    <tr><td>Tasks</td><td data-formula="=COUNTA(Tracker!B2:B7)">6</td></tr>
+    <tr><td>Done</td><td data-formula="=SUM(Tracker!F2:F7)">2</td></tr>
+    <tr><td>Progress</td><td class="key" data-formula="=ROUND(B3/B2*100,0)&amp;&quot;%&quot;">33%</td></tr>
+  </table>
+  <p class="note">Status values: Done, In progress, Not started. Formulas recalculate in Sheets; keep the visible text equal to the result.</p>
+</body>
+</html>
