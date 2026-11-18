@@ -37,7 +37,7 @@ Clone the repository and link it into the agent's skills folder. For Claude
 Code:
 
 ```bash
-git clone <repository-url> george-moffat
+git clone git@github.com:orage-developers/george-moffat-bg.git george-moffat
 ln -s "$PWD/george-moffat" ~/.claude/skills/george-moffat-html-to-files
 ```
 
