@@ -191,6 +191,18 @@ GOOGLE_FONTS = {
     "OpenSymbol": "Bebas Neue",
 }
 
+# Bebas Neue has no arrow glyph and LibreOffice drops the font of a run that
+# holds only an arrow, so those runs get Anton back.
+ARROW_FONT = "Anton"
+ARROW_RUN_RE = re.compile(r'<w:r>(<w:rPr>((?:(?!</w:rPr>).)*)</w:rPr>)?(<w:t[^>]*>\s*[\u2190-\u2193]\s*</w:t></w:r>)', re.S)
+
+
+def arrow_run(m):
+    props = re.sub(r"<w:rFonts\b[^>]*/>", "", m.group(2) or "")
+    fonts = f'<w:rFonts w:ascii="{ARROW_FONT}" w:hAnsi="{ARROW_FONT}" w:cs="{ARROW_FONT}"/>'
+    return f"<w:r><w:rPr>{fonts}{props}</w:rPr>{m.group(3)}"
+
+
 BODY_BGCOLOR_RE = re.compile(r'<body\b[^>]*\bbgcolor\s*=\s*["\']?#([0-9a-fA-F]{6})', re.I)
 
 
@@ -213,11 +225,14 @@ def fix_docx(docx: Path, page_color):
       Word and Google Docs read the whole list as a single unknown font.
     - LibreOffice default fonts become the brand body font (GOOGLE_FONTS).
     - body bgcolor becomes the page color (LibreOffice drops it).
+    - Arrow-only runs get the arrow font back (ARROW_FONT).
     """
     def edit(name, text):
         text = re.sub(r'(w:(?:ascii|hAnsi|eastAsia|cs)=")([^";]*);[^"]*"', r'\1\2"', text)
         text = re.sub(r'(w:(?:ascii|hAnsi|eastAsia|cs)=")([^"]*)"',
                       lambda m: f'{m.group(1)}{GOOGLE_FONTS.get(m.group(2), m.group(2))}"', text)
+        if name == "word/document.xml":
+            text = ARROW_RUN_RE.sub(arrow_run, text)
         if page_color and name == "word/document.xml":
             text = re.sub(r"<w:background\b[^>]*/>", "", text)
             text = re.sub(r"(<w:document\b[^>]*>)",

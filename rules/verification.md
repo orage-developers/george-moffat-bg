@@ -21,7 +21,8 @@ overwrite the delivered PDF. Look at every page, not only the first, at
   ```
 - Fonts: in every delivered PDF, `pdffonts` lists only Anton and
   BebasNeue. Any other font means a glyph the brand fonts lack or a
-  misspelled family.
+  misspelled family. The LibreOffice review renders of DOCX and PPTX may
+  also list OpenSymbol for list bullets; that is fine.
 - Colors: `grep -ci '#000000' file.html` prints 0, and the HTML uses only
   the greyscale in [brand.md](brand.md) (no gold, no hue).
 - PPTX: the slide count equals the number of slide sections:

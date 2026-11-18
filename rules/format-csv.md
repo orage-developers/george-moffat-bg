@@ -5,6 +5,8 @@
   suffix, unless you pick one with `--table`.
 - Exports `data-value` when present, else the visible text. Formulas are not
   exported: the cell text must hold the value.
+- XLSX and CSV drop captions: mark sample data in the sheet name
+  (`data-sheet="Calls (sample)"`) or in the values (`Jane Doe (sample)`).
 - Default: UTF-8, `,` delimiter. Only when the target is Excel with a
   `;` locale (e.g. Spanish), use `--delimiter ";" --bom`. Google Sheets reads
   the default as is.
