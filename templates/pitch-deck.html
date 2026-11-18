@@ -52,6 +52,8 @@
   .card { background: var(--g-card); border: 1px solid var(--g-line); border-left: 3px solid var(--g-white); padding: 0.35in 0.4in; }
   .card.std { border-left-color: var(--g-faint); }
   .card p { font-size: 19pt; line-height: 1.35; }
+  /* .card p would otherwise shrink prices inside cards. */
+  .card p.price { font-size: 44pt; }
   .card .no { font-size: 14pt; letter-spacing: 3px; color: var(--g-dim); }
   .big { font-size: 150pt; letter-spacing: 1px; line-height: 0.9; }
   .price { font-size: 44pt; letter-spacing: 1px; line-height: 1; margin: 0.1in 0; }
